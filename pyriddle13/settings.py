@@ -1,6 +1,15 @@
 # Django settings for pyriddle13 project.
+import os
+from django.core.exceptions import ImproperlyConfigured
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
-DEBUG = True
+DEBUG = get_env_variable('DEBUG')
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -23,7 +32,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'pyriddle13.pycon.it']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
