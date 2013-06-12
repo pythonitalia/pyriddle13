@@ -169,3 +169,12 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
+
+# Static files on S3
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
